@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataSense AI - Analisis Data Penjualan</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#f1f5ff}
+header{padding:22px 7%;background:#111a30;border-bottom:1px solid #293650;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.logo{font-size:23px;font-weight:bold;color:#9d91ff}
+nav a{color:#c4cce0;text-decoration:none;margin-left:20px;font-size:14px}
+main{max-width:1150px;margin:auto;padding:35px 22px}
+.hero{padding:30px 0}
+.tag{color:#69d1ff;font-size:12px;letter-spacing:2px;font-weight:bold}
+h1{font-size:clamp(30px,5vw,48px);margin:14px 0}
+.gradient{color:#a99bff}
+p{line-height:1.7;color:#aab6d0}
+button{border:0;padding:11px 16px;border-radius:9px;background:#a99bff;color:#10152a;font-weight:bold;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:25px 0}
+.card{background:#141e33;border:1px solid #2a3650;padding:20px;border-radius:15px;min-width:0}
+.card small{color:#aab6d0}
+.card h2{font-size:25px;margin:12px 0;color:#fff}
+.section-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin:18px 0}
+h3{margin-top:0}
+canvas{width:100%;height:260px;display:block}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:13px 8px;border-bottom:1px solid #2a3650}
+th{color:#a99bff}
+.table-wrap{overflow-x:auto}
+input{width:100%;padding:12px;border-radius:8px;border:1px solid #33415d;background:#0b1427;color:white;margin:10px 0}
+.result{background:#0c1528;border:1px solid #33415d;padding:14px;border-radius:10px;margin-top:14px;line-height:1.8;font-size:14px}
+.insight{padding:12px 0;border-bottom:1px solid #293650}
+.insight:last-child{border-bottom:0}
+footer{text-align:center;padding:25px;color:#8290ad;font-size:12px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.section-grid{grid-template-columns:1fr}header{padding:18px 5%;flex-wrap:wrap}nav a{margin:0 10px 0 0}}
+@media(max-width:420px){main{padding:20px 13px}.card{padding:13px}.card h2{font-size:21px}nav{display:flex;flex-wrap:wrap;gap:12px}nav a{margin:0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">✦ DataSense AI</div>
+  <nav>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#data">Data Penjualan</a>
+    <a href="#analisis">Analisis AI</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="tag">INTELLIGENT DATA ANALYTICS</div>
+    <h1>Make Sense of Data<br><span class="gradient">with Analysis AI.</span></h1>
+    <p>Ubah data penjualan menjadi informasi yang mudah dipahami.<br>
+    Temukan tren, pahami performa, dan ambil keputusan berdasarkan data.</p>
+    <button onclick="document.getElementById('analisis').scrollIntoView({behavior:'smooth'})">Mulai Analisis →</button>
+  </section>
+
+  <section id="dashboard">
+    <h3>Dashboard Penjualan</h3>
+    <p>Ringkasan data toko online berdasarkan lima bulan simulasi.</p>
+    <div class="stats">
+      <div class="card"><small>Total Pendapatan</small><h2 id="total">Rp35,5 jt</h2><small>Januari–Mei</small></div>
+      <div class="card"><small>Total Transaksi</small><h2 id="transaksi">710</h2><small>Jumlah transaksi</small></div>
+      <div class="card"><small>Rata-rata Bulanan</small><h2 id="rata">Rp7,1 jt</h2><small>Pendapatan rata-rata</small></div>
+      <div class="card"><small>Pendapatan Tertinggi</small><h2 id="tertinggi">Rp9 jt</h2><small id="bulanTertinggi">April</small></div>
+    </div>
+  </section>
+
+  <section class="section-grid">
+    <div class="card">
+      <h3>Grafik Pendapatan</h3>
+      <p>Perbandingan pendapatan toko setiap bulan.</p>
+      <canvas id="grafik" aria-label="Grafik pendapatan bulanan"></canvas>
+    </div>
+    <div class="card">
+      <h3>Insight Data</h3>
+      <div class="insight">
+        <strong>↗ Tren peningkatan</strong>
+        <p>Pendapatan meningkat dari Januari hingga April.</p>
+      </div>
+      <div class="insight">
+        <strong>! Evaluasi penjualan</strong>
+        <p>Pendapatan Mei turun dibandingkan April. Periksa promosi, stok, dan jumlah pesanan.</p>
+      </div>
+      <div class="insight">
+        <strong>✦ Peluang bisnis</strong>
+        <p>Pelajari strategi pada bulan dengan pendapatan tertinggi untuk menemukan peluang peningkatan penjualan.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="data">
+    <h3>Data Penjualan Toko Online</h3>
+    <p>Dataset contoh untuk studi kasus analisis penjualan.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bulan</th><th>Pendapatan</th><th>Transaksi</th><th>Status</th></tr></thead>
+        <tbody id="tabel"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" id="analisis" style="margin-top:20px">
+    <h3>✦ Analisis Data Otomatis</h3>
+    <p>Masukkan angka yang ingin dianalisis, pisahkan dengan koma. Contoh: 5, 6, 7.5, 9, 8</p>
+    <input id="angka" value="5, 6, 7.5, 9, 8" aria-label="Masukkan angka">
+    <button onclick="analisis()">Analisis Data</button>
+    <div class="result" id="hasil">Hasil analisis akan ditampilkan di sini.</div>
+  </section>
+
+  <section class="card" style="margin-top:20px">
+    <h3>Rekomendasi Bisnis</h3>
+    <p>1. Evaluasi penyebab penurunan pendapatan pada bulan Mei.</p>
+    <p>2. Identifikasi produk dan strategi yang mendukung penjualan tertinggi pada bulan April.</p>
+    <p>3. Perbarui data secara berkala agar keputusan bisnis didasarkan pada informasi terbaru.</p>
+  </section>
+</main>
+
+<footer>
+  DataSense AI · Make Sense of Data with Analysis AI<br>
+  Studi kasus analisis data penjualan toko online. Data yang digunakan merupakan simulasi.
+</footer>
+
+<script>
+const data=[
+ {bulan:"Januari",pendapatan:5,transaksi:100},
+ {bulan:"Februari",pendapatan:6,transaksi:120},
+ {bulan:"Maret",pendapatan:7.5,transaksi:150},
+ {bulan:"April",pendapatan:9,transaksi:180},
+ {bulan:"Mei",pendapatan:8,transaksi:160}
+];
+
+const formatAngka=n=>n.toLocaleString("id-ID",{maximumFractionDigits:2});
+const formatRupiah=n=>"Rp"+formatAngka(n)+" jt";
+
+function tampilkanData(){
+ document.getElementById("tabel").innerHTML=data.map(d=>
+ `<tr><td>${d.bulan}</td><td>${formatRupiah(d.pendapatan)}</td><td>${d.transaksi}</td><td>● Tercatat</td></tr>`
+ ).join("");
+
+ const total=data.reduce((s,d)=>s+d.pendapatan,0);
+ const transaksi=data.reduce((s,d)=>s+d.transaksi,0);
+ const tertinggi=data.reduce((a,b)=>a.pendapatan>b.pendapatan?a:b);
+
+ document.getElementById("total").textContent=formatRupiah(total);
+ document.getElementById("transaksi").textContent=formatAngka(transaksi);
+ document.getElementById("rata").textContent=formatRupiah(total/data.length);
+ document.getElementById("tertinggi").textContent=formatRupiah(tertinggi.pendapatan);
+ document.getElementById("bulanTertinggi").textContent=tertinggi.bulan;
+}
+
+function gambarGrafik(){
+ const c=document.getElementById("grafik");
+ const rect=c.getBoundingClientRect();
+ const ratio=window.devicePixelRatio||1;
+ c.width=Math.max(280,rect.width*ratio);
+ c.height=260*ratio;
+ const ctx=c.getContext("2d");
+ ctx.setTransform(ratio,0,0,ratio,0,0);
+ const w=c.width/ratio,h=260;
+ const kiri=38,kanan=12,atas=20,bawah=35;
+ const tinggi=h-atas-bawah,lebar=w-kiri-kanan;
+ ctx.clearRect(0,0,w,h);
+ ctx.font="11px Arial";
+ for(let i=0;i<=4;i++){
+  const y=atas+tinggi*i/4;
+  ctx.beginPath();ctx.moveTo(kiri,y);ctx.lineTo(w-kanan,y);
+  ctx.strokeStyle="#293650";ctx.stroke();
+  ctx.fillStyle="#9ba9c4";ctx.textAlign="right";
+  ctx.fillText(String(10-i*2.5),kiri-7,y+4);
+ }
+ const titik=data.map((d,i)=>({
+  x:kiri+lebar*i/(data.length-1),
+  y:atas+tinggi-(d.pendapatan/10)*tinggi,
+  d
+ }));
+ ctx.beginPath();
+ titik.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
+ ctx.strokeStyle="#a99bff";ctx.lineWidth=3;ctx.stroke();
+ titik.forEach(p=>{
+  ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);
+  ctx.fillStyle="#65d0ff";ctx.fill();
+  ctx.fillStyle="#f1f5ff";ctx.textAlign="center";
+  ctx.fillText(formatAngka(p.d.pendapatan),p.x,p.y-10);
+  ctx.fillStyle="#9ba9c4";
+  ctx.fillText(p.d.bulan.slice(0,3),p.x,h-10);
+ });
+}
+
+function analisis(){
+ const raw=document.getElementById("angka").value.trim();
+ const hasil=document.getElementById("hasil");
+ const angka=raw.split(/[,\s;]+/).filter(Boolean).map(Number);
+
+ if(!raw||angka.length===0||angka.some(n=>!Number.isFinite(n))){
+  hasil.innerHTML="<strong>Data tidak valid.</strong><br>Masukkan angka yang dipisahkan dengan koma, misalnya 5, 6, 7.5, 9, 8.";
+  return;
+ }
+
+ const urut=[...angka].sort((a,b)=>a-b);
+ const total=angka.reduce((a,b)=>a+b,0);
+ const rata=total/angka.length;
+ const tengah=Math.floor(urut.length/2);
+ const median=urut.length%2?urut[tengah]:(urut[tengah-1]+urut[tengah])/2;
+ const perubahan=angka.length>1&&angka[0]!==0
+  ?((angka[angka.length-1]-angka[0])/Math.abs(angka[0]))*100:null;
+
+ let kesimpulan="Tambahkan lebih banyak data untuk mengetahui pola dengan lebih baik.";
+ if(perubahan>0)kesimpulan="Nilai terakhir lebih tinggi daripada nilai pertama.";
+ else if(perubahan<0)kesimpulan="Nilai terakhir lebih rendah daripada nilai pertama.";
+ else if(perubahan===0)kesimpulan="Nilai pertama dan terakhir sama.";
+
+ hasil.innerHTML=
+ `<strong>Hasil Analisis Data</strong>
+ Jumlah data: <b>${angka.length}</b><br>
+ Total: <b>${formatAngka(total)}</b><br>
+ Rata-rata: <b>${formatAngka(rata)}</b><br>
+ Median: <b>${formatAngka(median)}</b><br>
+ Nilai minimum: <b>${formatAngka(urut[0])}</b><br>
+ Nilai maksimum: <b>${formatAngka(urut[urut.length-1])}</b><br>
+ ${perubahan===null?"":"Perubahan awal ke akhir: <b>"+formatAngka(perubahan)+"%</b><br>"}
+ <br><b>Kesimpulan:</b> ${kesimpulan}`;
+}
+
+window.addEventListener("resize",gambarGrafik);
+tampilkanData();
+gambarGrafik();
+analisis();
+</script>
+</body>
+</html>
